@@ -13,6 +13,7 @@ export class ProductlistComponent implements OnInit {
   imageMargin = 2;
   listFilter: string = 'listFilter';
   showImage: boolean = true;
+  hideProduct: boolean = true;
   products: IProduct[] = [{
     "id": 1,
     "productName": "Leaf Rake",
@@ -66,6 +67,11 @@ export class ProductlistComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  HideProducts(event: any)
+  {
+    this.hideProduct = !this.hideProduct;
   }
 
   toggleImage() : void{
