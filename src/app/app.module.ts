@@ -1,10 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './home/welcome.component';
 import { ProductModule } from './products/product.module';
+import { SharedModule } from './shared/shared.module';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { ProductDataService } from './products/product-data';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -13,9 +16,11 @@ import { ProductModule } from './products/product.module';
   ],
   imports: [
     BrowserModule,
-    FormsModule,
+    SharedModule,
+    HttpClientModule,
     AppRoutingModule,
-    ProductModule
+    ProductModule,
+    HttpClientInMemoryWebApiModule.forRoot(ProductDataService, {delay: 1000})
   ],
   providers: [],
   bootstrap: [AppComponent]
