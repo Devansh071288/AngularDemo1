@@ -5,9 +5,10 @@ import { ProductHideDirective } from './productHide.directive';
 import { ConvertToSpaces } from './convertToSpaces.pipe';
 import { AppRoutingModule } from '../app-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 @NgModule({
-  declarations: [ ProductlistComponent, ProductHideDirective, ConvertToSpaces],
+  declarations: [ ProductlistComponent, ProductHideDirective, ConvertToSpaces, ProductDetailComponent],
   imports: [
     CommonModule,
     SharedModule,
