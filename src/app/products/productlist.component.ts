@@ -33,16 +33,16 @@ export class ProductlistComponent implements OnInit {
 
   ngOnInit() {
     this.productService.getProducts().subscribe((products: IProduct[]) => {
-      this.products = products.sort(this.compareProducts);
+      this.products = products;
       this.filteredProducts = this.products;
       this.listFilter = this.route.snapshot.queryParams['filterBy'] || '';
     })
   }
 
-  compareProducts(a: IProduct, b: IProduct): number
-  {
-    return (a.productName.charCodeAt(0) - b.productName.charCodeAt(0));
-  }
+  // compareProducts(a: IProduct, b: IProduct): number
+  // {
+  //   return (a.productName.charCodeAt(0) - b.productName.charCodeAt(0));
+  // }
 
   HideProducts(event: any)
   {
@@ -62,6 +62,18 @@ export class ProductlistComponent implements OnInit {
   {
     return this.products.filter((product: IProduct) => 
     product.productName.toLocaleLowerCase().indexOf(filterBy.toLocaleLowerCase()) !== -1);
+  }
+
+  OnDelete(product: IProduct)
+  {
+    this.filteredProducts = this.filteredProducts.filter(p => p !== product);
+    if(confirm(`Really delete the product : ${product.productName} ?`))
+    {
+      this.productService.deleteProduct(product).subscribe(() => {
+        console.log("Product Deleted.")
+      });
+    }
+
   }
 
 }

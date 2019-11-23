@@ -29,6 +29,8 @@
               <th>Available</th>
               <th>Price</th>
               <th>5 Star Rating</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -53,7 +55,14 @@
                   >
                 </pm-star>
                 </td>
-               
+                <td>
+                  <a class="btn btn-primary" [routerLink]="['/products', product.id, 'edit']">
+                    Edit
+                  </a>
+                </td>
+                <td>
+                  <a class="btn btn-primary" [routerLink]="" (click)="OnDelete(product)">Delete</a>
+                </td>
               </tr>
             </tbody>
       </table>
