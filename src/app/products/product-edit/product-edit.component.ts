@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IProduct } from '../product';
 import { ProductService } from '../product.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-product-edit',
@@ -12,17 +12,26 @@ import { NgForm } from '@angular/forms';
 export class ProductEditComponent implements OnInit {
 
   pageTitle: string = 'Product Edit';
-  @ViewChild(NgForm) editForm: NgForm;
+  // @ViewChild(NgForm) editForm: NgForm;
+  pForm: FormGroup;
   product: IProduct;
   errorMessage: string;
   constructor(private productService: ProductService, private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router, private fb : FormBuilder) { }
 
   ngOnInit() {
-    this.route.params.subscribe((params) => {
+
+    this.pForm = this.fb.group({ // Synchronous call
+      productName: ['', [Validators.required, Validators.minLength(2)]],
+      productCode: ['', [Validators.required]]
+    });
+
+    this.route.params.subscribe((params) => { // Asynchronous call
       const id = +params['id'];
       this.getProduct(id);
     });
+
+    
   }
 
   getProduct(id: number)
@@ -34,9 +43,9 @@ export class ProductEditComponent implements OnInit {
 
   onProductsRetrieved(product: IProduct) : void{
     // Reset the form to pristine
-    this.editForm.reset();
+   // this.editForm.reset(); Template Driven
     this.product = Object.assign({}, product);
-    
+    this.populateData(product);
     if(this.product.id === 0)
     {
       this.pageTitle = 'Add Product';
@@ -48,9 +57,17 @@ export class ProductEditComponent implements OnInit {
 
   }
 
+  populateData(product: IProduct)
+  {
+    this.pForm.patchValue({ // Assigning values to a Reactive form.
+      productName: product.productName,
+      productCode: product.productCode
+    });
+  }
+
   cancel(): void
   {
-    console.log(this.product);
+    // console.log(this.product);
     this.router.navigate(['/products']);
   }
 
@@ -69,8 +86,11 @@ export class ProductEditComponent implements OnInit {
 
   saveProduct(): void
   {
-    if(this.editForm.valid)
+    if(this.pForm.valid)
     {
+      
+      console.log(this.pForm.value); // Reactive
+      this.product = Object.assign({}, this.product, this.pForm.value) 
       this.productService.saveProduct(this.product).
       subscribe(() => {
           this.onSaveComplete();
@@ -79,7 +99,8 @@ export class ProductEditComponent implements OnInit {
   }
 
   onSaveComplete(): void{
-    this.editForm.reset(this.editForm.value);
+    // this.editForm.reset(this.editForm.value); Template Driven
+    this.pForm.reset(this.pForm.value); // Reactive 
     this.router.navigate(['/products']);
   }
 
