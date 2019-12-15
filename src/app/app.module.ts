@@ -16,10 +16,10 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
+   // ProductModule,
     SharedModule,
     HttpClientModule,
     AppRoutingModule,
-    ProductModule,
     HttpClientInMemoryWebApiModule.forRoot(ProductDataService, {delay: 1000})
   ],
   providers: [],

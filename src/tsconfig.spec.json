@@ -8,8 +8,10 @@
     ]
   },
   "files": [
-    "test.ts",
-    "polyfills.ts"
+    "main.ts",
+    "polyfills.ts",
+    // "app/app.module.ts",
+    // "app/products/product.module.ts"
   ],
   "include": [
     "**/*.spec.ts",

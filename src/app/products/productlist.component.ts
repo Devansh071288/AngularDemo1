@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { IProduct } from './product';
 import { ProductService } from './product.service';
 import { ActivatedRoute } from '@angular/router';
@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-productlist',
   templateUrl: './productlist.component.html',
-  styleUrls: ['./productlist.component.css']
+  styleUrls: ['./productlist.component.css'],
 })
 export class ProductlistComponent implements OnInit {
 
